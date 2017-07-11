@@ -1,6 +1,7 @@
 var React = require('react');
 
 var TodoList = require('TodoList');
+var TodoForm = require('TodoForm');
 
 var TodoApp = React.createClass({
     getInitialState: function() {
@@ -25,10 +26,22 @@ var TodoApp = React.createClass({
             ]
         };
     },
+    addNewTodo: function(newTodoText) {
+        var todos = this.state.todos;
+        var newTodo = {
+            id: this.state.todos.length + 1,
+            text: newTodoText
+        }
+        todos.push(newTodo);
+        this.setState({
+            todos
+        })
+    },
     render: function() {
         return (
             <div>
                 <TodoList todos={this.state.todos}/>
+                <TodoForm addNewTodo={this.addNewTodo}/>
             </div>
         )
     }
