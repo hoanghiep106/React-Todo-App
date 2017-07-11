@@ -22,9 +22,9 @@ module.exports = {
     },
     resolve: {
         root: __dirname,
-        moduleDirectories: [
+        modulesDirectories: [
             'node_modules',
-            './src/components'
+            './src/components/'
         ],
         alias: {
             applicationStyle: 'src/styles/app.scss'
