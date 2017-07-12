@@ -107,7 +107,7 @@
 
 	$(document).foundation();
 
-	__webpack_require__(295);
+	__webpack_require__(296);
 
 	ReactDOM.render(React.createElement(TodoApp, null), document.getElementById('app'));
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
@@ -25480,6 +25480,7 @@
 	var TodoList = __webpack_require__(291);
 	var TodoForm = __webpack_require__(293);
 	var TodoSearch = __webpack_require__(294);
+	var TodoAPI = __webpack_require__(295);
 
 	var TodoApp = React.createClass({
 	    displayName: 'TodoApp',
@@ -25488,24 +25489,11 @@
 	        return {
 	            showCompleted: false,
 	            searchText: '',
-	            todos: [{
-	                id: uuid(),
-	                text: 'Walk the dog',
-	                completed: false
-	            }, {
-	                id: uuid(),
-	                text: 'Clean the yard',
-	                completed: true
-	            }, {
-	                id: uuid(),
-	                text: 'Leave mail on porch',
-	                completed: false
-	            }, {
-	                id: uuid(),
-	                text: 'Play video games',
-	                completed: false
-	            }]
+	            todos: TodoAPI.getTodos()
 	        };
+	    },
+	    componentDidUpdate: function componentDidUpdate() {
+	        TodoAPI.setTodos(this.state.todos);
 	    },
 	    addNewTodo: function addNewTodo(newTodoText) {
 	        var todos = this.state.todos;
@@ -34402,15 +34390,34 @@
 
 /***/ }),
 /* 295 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	    setTodos: function setTodos(todos) {
+	        if (todos && todos.length) {
+	            localStorage.setItem('todos', JSON.stringify(todos));
+	            return todos;
+	        }
+	    },
+	    getTodos: function getTodos() {
+	        var todos = localStorage.getItem('todos');
+	        return todos ? JSON.parse(todos) : [];
+	    }
+	};
+
+/***/ }),
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(296);
+	var content = __webpack_require__(297);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(298)(content, {});
+	var update = __webpack_require__(299)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -34427,10 +34434,10 @@
 	}
 
 /***/ }),
-/* 296 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(297)();
+	exports = module.exports = __webpack_require__(298)();
 	// imports
 
 
@@ -34441,7 +34448,7 @@
 
 
 /***/ }),
-/* 297 */
+/* 298 */
 /***/ (function(module, exports) {
 
 	/*
@@ -34497,7 +34504,7 @@
 
 
 /***/ }),
-/* 298 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*
