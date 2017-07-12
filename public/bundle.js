@@ -25509,7 +25509,7 @@
 	    handleSearch: function handleSearch(showCompleted, searchText) {
 	        this.setState({
 	            showCompleted: showCompleted,
-	            searchText: searchText,
+	            searchText: searchText.toLowerCase(),
 	            completed: false
 	        });
 	    },
@@ -25523,11 +25523,17 @@
 	        this.setState({ todos: todos });
 	    },
 	    render: function render() {
+	        var _state = this.state,
+	            todos = _state.todos,
+	            showCompleted = _state.showCompleted,
+	            searchText = _state.searchText;
+
+	        var filteredTodos = TodoAPI.filteredTodos(todos, showCompleted, searchText);
 	        return React.createElement(
 	            'div',
 	            null,
 	            React.createElement(TodoSearch, { onSearch: this.handleSearch }),
-	            React.createElement(TodoList, { todos: this.state.todos, onToggle: this.handleToggle }),
+	            React.createElement(TodoList, { todos: filteredTodos, onToggle: this.handleToggle }),
 	            React.createElement(TodoForm, { addNewTodo: this.addNewTodo })
 	        );
 	    }
@@ -34404,6 +34410,26 @@
 	    getTodos: function getTodos() {
 	        var todos = localStorage.getItem('todos');
 	        return todos ? JSON.parse(todos) : [];
+	    },
+	    filteredTodos: function filteredTodos(todos, showCompleted, searchText) {
+	        var filterTodos = todos;
+	        filterTodos = filterTodos.filter(function (todo) {
+	            return !todo.completed || showCompleted;
+	        });
+
+	        filterTodos = filterTodos.filter(function (todo) {
+	            var text = todo.text.toLowerCase();
+	            return searchText.length === 0 || text.indexOf(searchText) > -1;
+	        });
+
+	        filterTodos = filterTodos.sort(function (a, b) {
+	            if (a.completed && !b.completed) {
+	                return 1;
+	            } else {
+	                return 0;
+	            }
+	        });
+	        return filterTodos;
 	    }
 	};
 
