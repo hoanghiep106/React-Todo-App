@@ -4,3 +4,6 @@
 @import "foundation";
 @include foundation-everything;
 //Components
+@import "components/page-title";
+@import "components/container";
+@import "components/todo";
