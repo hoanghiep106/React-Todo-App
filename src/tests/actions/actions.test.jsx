@@ -10,12 +10,27 @@ describe('Actions', () => {
         var res = actions.setSearchText(action.searchText);
         expect(res).toEqual(action);
     });
-    it('should generate add too action', () => {
+    it('should generate add todo action', () => {
         var action = {
             type: 'ADD_TODO',
             text: 'test'
         };
         var res = actions.addTodo(action.text);
+        expect(res).toEqual(action);
+    });
+    it('should generate add todos action', () => {
+        var todos = [{
+            id: '111',
+            text: 'anything',
+            completed: false,
+            completedAt: undefined,
+            createdAt: 33000
+        }];
+        var action = {
+            type: 'ADD_TODOS',
+            todos
+        };
+        var res = actions.addTodos(todos);
         expect(res).toEqual(action);
     });
     it('should generate toggle show completed action', () => {

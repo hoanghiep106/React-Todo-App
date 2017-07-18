@@ -42,6 +42,8 @@ export var todoReducer = (state = [], action) => {
                     return todo
                 }
             });
+        case 'ADD_TODOS':
+            return state.concat(action.todos);
         default:
             return state;
     }
