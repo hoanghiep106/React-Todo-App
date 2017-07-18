@@ -25,6 +25,7 @@ export var todoReducer = (state = [], action) => {
             var newTodo = {
                 id: uuid(),
                 text: action.text,
+                completed: false,
                 createdAt: moment().unix(),
                 completedAt: undefined
             }
@@ -33,7 +34,7 @@ export var todoReducer = (state = [], action) => {
             return state.map( todo => {
                 if(todo.id === action.id) {
                     var nextCompleted = !todo.completed;
-                    return Object.assign({}, state, {
+                    return Object.assign({}, todo, {
                         completed: nextCompleted,
                         completedAt: nextCompleted ? moment().unix() : undefined
                     });
